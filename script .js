@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Agregar event listener al botón cuando el DOM esté listo
     document.getElementById('generate').addEventListener('click', generateM3U);
 
     function generateM3U() {
