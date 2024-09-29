@@ -1,17 +1,25 @@
-function generateM3U() {
-    var url = document.getElementById('url').value;
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
+document.getElementById('generate').addEventListener('click', function() {
+    const url = document.getElementById('url').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-    // M3U content with IPTV credentials
-    var m3uContent = `#EXTM3U\n#EXTINF:-1,Your Channel\n${url}?username=${username}&password=${password}&type=m3u&output=mpegts`;
+    // Validar que todos los campos estén llenos
+    if (!url || !username || !password) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
 
-    // Create a blob from the M3U content
-    var blob = new Blob([m3uContent], { type: 'text/plain' });
+    // Crear contenido del archivo M3U
+    const m3uContent = `#EXTM3U
+#EXTINF:-1,${username}
+http://${username}:${password}@${url}`;
 
-    // Create a download link for the blob
-    var downloadLink = document.getElementById('downloadLink');
-    downloadLink.href = window.URL.createObjectURL(blob);
-    downloadLink.download = 'playlist.m3u';
-    downloadLink.style.display = 'block';
-}
+    // Crear un blob con el contenido M3U
+    const blob = new Blob([m3uContent], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'playlist.m3u';
+
+    // Simular clic para descargar el archivo
+    link.click();
+});
